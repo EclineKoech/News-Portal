@@ -5,7 +5,7 @@ By Ecline Koech
 Date: 2021 08 22
 
 # Description
-A rest REST API for querying and retrieving scoped news and information.
+A REST API for querying and retrieving scoped news and information.
 
 # Setup & Installations
 * Ensure to have JUnit, intellij, SDK,JDK.
