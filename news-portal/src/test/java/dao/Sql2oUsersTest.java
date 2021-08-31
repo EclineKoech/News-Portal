@@ -2,33 +2,40 @@ package dao;
 
 import models.Department;
 import models.Users;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import static org.junit.Assert.assertEquals;
 
 
-public class Sql2OUsersTest {
-  private Connection conn;
-  private Sql2oUsersDao usersDao;
-  private Sql2oDepartmentDao departmentDao;
+public class Sql2oUsersTest {
+  private static Connection conn;
+  private static Sql2oUsersDao usersDao;
+  private static Sql2oDepartmentDao departmentDao;
 
 
-  @Before
-  public void setUp() throws Exception {
-    String connectionString = "jdbc:postgresql://localhost:4567/news_portal";
+  @BeforeClass
+  public static void setUp() throws Exception {
+    String connectionString = "jdbc:postgresql://localhost:5432/news_portal_test";
     Sql2o sql2o = new Sql2o(connectionString, "ecline", "12345");
     departmentDao = new Sql2oDepartmentDao(sql2o);
     usersDao = new Sql2oUsersDao(sql2o);
     conn = sql2o.open();
   }
 
+
   @After
   public void tearDown() throws Exception {
+    System.out.println("clearing database");
+    departmentDao.clearAll();
+    usersDao.clearAll();
+  }
+
+  @AfterClass
+  public static void shutDown() throws Exception{
     conn.close();
+    System.out.println("connection closed");
   }
 
   @Test
@@ -39,7 +46,7 @@ public class Sql2OUsersTest {
   }
 
   @Test
-  public void getAllReviewsByDepartment() throws Exception {
+  public void getAllUsersByDepartment() throws Exception {
     Department testDepartment = setUpDepartment();
     Department otherDepartment = setUpDepartment();
     Users users1 = setUpUsersForDepartment(testDepartment);
@@ -49,7 +56,7 @@ public class Sql2OUsersTest {
   }
 
   @Test
-  public void deleteById(int id) throws Exception {
+  public void deleteById() throws Exception {
     Users testUser = setUpUsers();
     Users otherUsers = setUpUsers();
     assertEquals(2, usersDao.getAll().size());
@@ -68,19 +75,19 @@ public class Sql2OUsersTest {
 //  helpers
 
   public Users setUpUsers() {
-    Users users = new Users("clen","dev",3, "dev",454);
+    Users users = new Users("clen","dev","3", 20);
     usersDao.add(users);
     return users;
   }
 
   public Users setUpUsersForDepartment(Department department){
-    Users users = new Users("Clen","dev",5,"dev dept", department.getId());
+    Users users = new Users("Clen","dev","dev", department.getId());
     usersDao.add(users);
     return users;
   }
 
   public Department setUpDepartment() {
-    Department department = new Department("Admin dept","admin purposes",45,1023);
+    Department department = new Department("Admin dept","admin purposes",45);
     departmentDao.add(department);
     return department;
   }

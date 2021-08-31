@@ -5,6 +5,15 @@ import java.util.Objects;
 public class Department {
   private String name;
   private String description;
+  private int numberOfEmployees;
+  private int id;
+
+  public Department(String name, String description, int numberOfEmployees) {
+    this.name = name;
+    this.description = description;
+    this.numberOfEmployees = numberOfEmployees;
+
+  }
 
   public String getName() {
     return name;
@@ -26,10 +35,6 @@ public class Department {
     return numberOfEmployees;
   }
 
-  public void setNumberOfEmployees(int numberOfEmployees) {
-    this.numberOfEmployees = numberOfEmployees;
-  }
-
   public int getId() {
     return id;
   }
@@ -38,14 +43,8 @@ public class Department {
     this.id = id;
   }
 
-  private int numberOfEmployees;
-  private int id;
-
-  public Department(String name, String description, int numberOfEmployees, int id) {
-    this.name = name;
-    this.description = description;
+  public void setNumberOfEmployees(int numberOfEmployees) {
     this.numberOfEmployees = numberOfEmployees;
-    this.id = id;
   }
 
   @Override
@@ -55,8 +54,8 @@ public class Department {
     Department that = (Department) o;
     return getNumberOfEmployees() == that.getNumberOfEmployees() &&
             getId() == that.getId() &&
-            getName().equals(that.getName()) &&
-            getDescription().equals(that.getDescription());
+            Objects.equals(getName(), that.getName()) &&
+            Objects.equals(getDescription(), that.getDescription());
   }
 
   @Override

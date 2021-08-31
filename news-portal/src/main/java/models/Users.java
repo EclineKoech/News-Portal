@@ -6,14 +6,17 @@ public class Users {
   private String name;
   private String position;
   private int id;
-  private String user_department;
+  private String userDepartment;
+  private int departmentId;
 
-  public Users(String name, String position, int id, String user_department) {
+
+  public Users(String name, String position, String userDepartment, int departmentId) {
     this.name = name;
     this.position = position;
-    this.id = id;
-    this.user_department = user_department;
+    this.userDepartment = userDepartment;
+    this.departmentId = departmentId;
   }
+
 
   public String getName() {
     return name;
@@ -39,12 +42,20 @@ public class Users {
     this.id = id;
   }
 
-  public String getUser_department() {
-    return user_department;
+  public String getUserDepartment() {
+    return userDepartment;
   }
 
-  public void setUser_department(String user_department) {
-    this.user_department = user_department;
+  public void setUserDepartment(String userDepartment) {
+    this.userDepartment = userDepartment;
+  }
+
+  public int getDepartmentId() {
+    return departmentId;
+  }
+
+  public void setDepartmentId(int departmentId) {
+    this.departmentId = departmentId;
   }
 
   @Override
@@ -53,13 +64,14 @@ public class Users {
     if (!(o instanceof Users)) return false;
     Users users = (Users) o;
     return getId() == users.getId() &&
-            getName().equals(users.getName()) &&
-            getPosition().equals(users.getPosition()) &&
-            getUser_department().equals(users.getUser_department());
+            getDepartmentId() == users.getDepartmentId() &&
+            Objects.equals(getName(), users.getName()) &&
+            Objects.equals(getPosition(), users.getPosition()) &&
+            Objects.equals(getUserDepartment(), users.getUserDepartment());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getName(), getPosition(), getId(), getUser_department());
+    return Objects.hash(getName(), getPosition(), getId(), getUserDepartment(), getDepartmentId());
   }
 }

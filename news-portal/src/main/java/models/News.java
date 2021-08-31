@@ -6,9 +6,8 @@ public class News {
   private String post;
   private int id;
 
-  public News(String post, int id) {
+  public News(String post) {
     this.post = post;
-    this.id = id;
   }
 
   public String getPost() {
